@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>turtlebot3_slam_house</name>
+  <version>0.0.1</version>
+  <description>ROS 2 package for TurtleBot3 Burger SLAM simulation in Gazebo house world with slam_toolbox, RViz2, and a custom Tkinter teleop GUI.</description>
+
+  <author email="josiahsaji@gmail.com">JosiahSK</author>
+  <maintainer email="josiahsaji@gmail.com">JosiahSK</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>turtlebot3_gazebo</exec_depend>
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

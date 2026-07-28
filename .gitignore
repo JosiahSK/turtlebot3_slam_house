@@ -1,0 +1,18 @@
+# ROS 2 build & workspace artifacts
+build/
+install/
+log/
+
+# Python compiled / cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor / IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Map artifacts (repo is map-free; users generate maps locally)
+maps/
+*.pgm
