@@ -2,6 +2,17 @@
 
 A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gazebo house environment. This package features live online 2D mapping via `slam_toolbox`, pre-configured visualization in RViz2, and an intuitive custom Tkinter-based Teleop GUI controller.
 
+<table>
+  <tr>
+    <td align="center"><b>Gazebo House Environment</b></td>
+    <td align="center"><b>RViz2 2D Mapping (Complete)</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/gazebo_house_world.png" alt="Gazebo House World" width="100%"></td>
+    <td><img src="docs/images/rviz_map_complete.png" alt="RViz2 Complete Map" width="100%"></td>
+  </tr>
+</table>
+
 ---
 
 ## Features
@@ -30,7 +41,7 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 1. **Clone the repository** into your ROS 2 workspace `src` directory:
    ```bash
    cd ~/slam_ws/src
-   git clone <repository-url> turtlebot3_slam_house
+   git clone https://github.com/JosiahSK/turtlebot3_slam_house.git
    ```
 
 2. **Build the workspace**:
@@ -60,9 +71,21 @@ This single launch command brings up:
 
 ---
 
+## 2D SLAM Mapping in Progress
+
+As the robot explores the environment, `slam_toolbox` processes laser scan data and wheel odometry to dynamically map out walls, doorways, and rooms:
+
+![SLAM Mapping in Progress](docs/images/rviz_mapping_in_progress.png)
+
+---
+
 ## Driving the Robot (Teleop Controller)
 
 The custom Teleop GUI (`teleop_gui.py`) automatically opens upon launch.
+
+<p align="center">
+  <img src="docs/images/teleop_gui.png" alt="TurtleBot3 Teleop GUI Controller" width="380">
+</p>
 
 - **On-Screen Directional Buttons**: Click and hold **▲ UP**, **◄ LEFT**, **▼ DOWN**, or **► RIGHT** to steer.
 - **Keyboard Arrow Keys**: Focus the GUI window and use the **Up**, **Down**, **Left**, and **Right** arrow keys.
@@ -121,11 +144,18 @@ ros2 launch turtlebot3_slam_house slam_house.launch.py
 ```text
 turtlebot3_slam_house/
 ├── CMakeLists.txt                        # CMake build configuration
+├── LICENSE                               # Apache License 2.0
 ├── package.xml                           # ROS 2 package metadata and dependencies
 ├── README.md                             # Project documentation
 ├── .gitignore                            # ROS 2 workspace git ignore definitions
 ├── config/
 │   └── mapper_params_online_async.yaml   # SLAM Toolbox online async mapping parameters
+├── docs/
+│   └── images/                           # Screenshots and visuals
+│       ├── gazebo_house_world.png
+│       ├── rviz_mapping_in_progress.png
+│       ├── rviz_map_complete.png
+│       └── teleop_gui.png
 ├── launch/
 │   └── slam_house.launch.py              # Main bringup launch file (Gazebo + SLAM + RViz2 + Teleop GUI)
 ├── rviz/
@@ -143,3 +173,9 @@ turtlebot3_slam_house/
 - **`turtlebot3_simulations`**: `jazzy` branch (`turtlebot3_gazebo` house world)
 - **`turtlebot3_msgs`**: `jazzy` branch
 - **`slam_toolbox`**: `jazzy` branch
+
+---
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
