@@ -1,6 +1,10 @@
-# TurtleBot3 Burger SLAM House Simulation
+# TurtleBot3 Burger SLAM House Simulation (ROS 2 Humble Branch)
 
 A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gazebo house environment. This package features live online 2D mapping via `slam_toolbox`, pre-configured visualization in RViz2, and an intuitive custom Tkinter-based Teleop GUI controller.
+
+> [!NOTE]
+> **ROS 2 Distro Support**: This is the **`humble`** branch configured for **ROS 2 Humble** and **Classic Gazebo** (`gazebo_ros` / `gazebo_plugins`).
+> For ROS 2 Jazzy (Gazebo Sim / `ros_gz`), please switch to the [`main`](https://github.com/JosiahSK/turtlebot3_slam_house/tree/main) branch.
 
 <table>
   <tr>
@@ -17,7 +21,7 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ## Features
 
-- **Gazebo House World**: Loads the standard TurtleBot3 House simulation environment populated with walls, rooms, and obstacles.
+- **Gazebo House World**: Loads the standard TurtleBot3 House simulation environment in Classic Gazebo populated with walls, rooms, and obstacles.
 - **2D Online SLAM**: Uses `slam_toolbox` (online async mode) with tuned mapping parameters.
 - **RViz2 Visualization**: Automatically launches RViz2 pre-configured with Map, Robot Model, LaserScan, TF, and Footprint display plugins.
 - **Custom GUI Teleop**: Includes a standalone Python Tkinter GUI featuring press-to-drive buttons, keyboard arrow key controls, spacebar emergency stop, and real-time speed sliders.
@@ -26,11 +30,13 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ## Prerequisites
 
-- **OS**: Ubuntu 24.04 LTS (or compatible Linux distribution)
-- **ROS 2**: ROS 2 Jazzy Jalisco (or Humble / Iron)
+- **OS**: Ubuntu 22.04 LTS (Jammy Jellyfish)
+- **ROS 2**: ROS 2 Humble Hawksbill
+- **Simulator**: Classic Gazebo (Gazebo 11 / `gazebo_ros_pkgs`, `gazebo_plugins`)
 - **Dependencies**:
-  - `turtlebot3` packages (`turtlebot3`, `turtlebot3_simulations`, `turtlebot3_msgs`)
-  - `slam_toolbox`
+  - `gazebo_ros_pkgs` (`sudo apt install ros-humble-gazebo-ros-pkgs`)
+  - `turtlebot3` packages (`turtlebot3`, `turtlebot3_simulations`, `turtlebot3_msgs`) — `humble` branch
+  - `slam_toolbox` (`sudo apt install ros-humble-slam-toolbox`)
   - `rviz2`
   - Python 3 with `tkinter` (`sudo apt install python3-tk`)
 
@@ -38,13 +44,28 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ## Installation & Setup
 
-1. **Clone the repository** into your ROS 2 workspace `src` directory:
+1. **Clone the repository** into your ROS 2 workspace `src` directory on the `humble` branch:
    ```bash
    cd ~/slam_ws/src
-   git clone https://github.com/JosiahSK/turtlebot3_slam_house.git
+   git clone -b humble https://github.com/JosiahSK/turtlebot3_slam_house.git
    ```
 
-2. **Build the workspace**:
+2. **Install TurtleBot3 Humble dependencies**:
+   ```bash
+   cd ~/slam_ws/src
+   git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3.git
+   git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+   git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+   ```
+
+3. **Install system dependencies via rosdep**:
+   ```bash
+   cd ~/slam_ws
+   rosdep update
+   rosdep install --from-paths src --ignore-src -r -y
+   ```
+
+4. **Build the workspace**:
    ```bash
    cd ~/slam_ws
    colcon build --symlink-install
@@ -54,20 +75,29 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ## Quick Start / Launch Instructions
 
-Source your ROS 2 environment, set the TurtleBot3 model, and execute the launch file:
+Source your ROS 2 Humble environment, set the TurtleBot3 model, and execute the launch file:
 
 ```bash
-source /opt/ros/$ROS_DISTRO/setup.bash
+source /opt/ros/humble/setup.bash
 source install/setup.bash
 export TURTLEBOT3_MODEL=burger
 ros2 launch turtlebot3_slam_house slam_house.launch.py
 ```
 
 This single launch command brings up:
-1. **Gazebo Simulator** with TurtleBot3 Burger spawned in the House world.
+1. **Classic Gazebo Simulator** (`gazebo_ros`) with TurtleBot3 Burger spawned in the House world (`spawn_entity.py`).
 2. **`slam_toolbox`** node executing asynchronous 2D mapping.
 3. **RViz2** displaying the live map generation.
 4. **Teleop GUI Controller** for driving the robot.
+
+---
+
+## Known Limitations & Verification Note
+
+> [!IMPORTANT]
+> **Untested on Live ROS 2 Humble Machine**:
+> This branch was updated to target ROS 2 Humble and Classic Gazebo (`gazebo_ros` / `gazebo_plugins`) based on official Humble package specifications and APIs. However, because the development host machine only has ROS 2 Jazzy installed, end-to-end launch and build execution on this branch could not be verified on a live ROS 2 Humble environment.
+> If running on ROS 2 Humble, please verify that topic names (e.g. `/cmd_vel`, `/scan`, `/odom`, `/tf`) and spawning behavior function as expected.
 
 ---
 
@@ -100,7 +130,7 @@ Once you have explored the environment and built a satisfactory map in RViz:
 
 1. Open a new terminal and source the workspace:
    ```bash
-   source /opt/ros/$ROS_DISTRO/setup.bash
+   source /opt/ros/humble/setup.bash
    source ~/slam_ws/install/setup.bash
    ```
 
@@ -168,11 +198,11 @@ turtlebot3_slam_house/
 
 ## Reference Package Versions & Branches
 
-- **ROS 2 Distribution**: ROS 2 Jazzy Jalisco (Ubuntu 24.04 LTS)
-- **`turtlebot3`**: `jazzy` branch
-- **`turtlebot3_simulations`**: `jazzy` branch (`turtlebot3_gazebo` house world)
-- **`turtlebot3_msgs`**: `jazzy` branch
-- **`slam_toolbox`**: `jazzy` branch
+- **ROS 2 Distribution**: ROS 2 Humble Hawksbill (Ubuntu 22.04 LTS)
+- **`turtlebot3`**: `humble` branch
+- **`turtlebot3_simulations`**: `humble` branch (`turtlebot3_gazebo` house world)
+- **`turtlebot3_msgs`**: `humble` branch
+- **`slam_toolbox`**: `humble` branch
 
 ---
 

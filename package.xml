@@ -3,7 +3,7 @@
 <package format="3">
   <name>turtlebot3_slam_house</name>
   <version>0.0.1</version>
-  <description>ROS 2 package for TurtleBot3 Burger SLAM simulation in Gazebo house world with slam_toolbox, RViz2, and a custom Tkinter teleop GUI.</description>
+  <description>ROS 2 package for TurtleBot3 Burger SLAM simulation in Gazebo house world with slam_toolbox, RViz2, and a custom Tkinter teleop GUI (ROS 2 Humble / Classic Gazebo).</description>
 
   <author email="josiahsaji@gmail.com">JosiahSK</author>
   <maintainer email="josiahsaji@gmail.com">JosiahSK</maintainer>
@@ -14,6 +14,9 @@
   <exec_depend>rclpy</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>turtlebot3_gazebo</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>gazebo_ros_pkgs</exec_depend>
   <exec_depend>slam_toolbox</exec_depend>
   <exec_depend>rviz2</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>

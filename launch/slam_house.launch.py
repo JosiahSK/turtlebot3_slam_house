@@ -18,7 +18,7 @@ def generate_launch_description():
     # Ensure TURTLEBOT3_MODEL environment variable is exported as burger
     set_tb3_model = SetEnvironmentVariable('TURTLEBOT3_MODEL', 'burger')
 
-    # 1. Gazebo House World + Spawner + Robot State Publisher + GZ ROS Parameter Bridge
+    # 1. Classic Gazebo (gazebo_ros) House World + Spawner + Robot State Publisher
     turtlebot3_house_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_turtlebot3_gazebo, 'launch', 'turtlebot3_house.launch.py')
