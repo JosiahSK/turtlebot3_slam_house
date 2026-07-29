@@ -15,6 +15,20 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ---
 
+## ROS 2 Distro Support
+
+This repository follows standard ROS 2 conventions with separate branches for different ROS 2 distributions:
+
+- **`main` branch**: ROS 2 Jazzy Jalisco (new Gazebo / `ros_gz`)
+- **`humble` branch**: ROS 2 Humble Hawksbill (classic Gazebo / `gazebo_ros`)
+
+To clone the **Humble** version:
+```bash
+git clone -b humble https://github.com/JosiahSK/turtlebot3_slam_house.git
+```
+
+---
+
 ## Features
 
 - **Gazebo House World**: Loads the standard TurtleBot3 House simulation environment populated with walls, rooms, and obstacles.
