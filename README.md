@@ -1,5 +1,7 @@
 # TurtleBot3 Burger SLAM House Simulation
 
+![ROS2](https://img.shields.io/badge/ROS2-Humble-blue?logo=ros&logoColor=white)
+
 A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gazebo house environment. This package features live online 2D mapping via `slam_toolbox`, pre-configured visualization in RViz2, and an intuitive custom Tkinter-based Teleop GUI controller.
 
 <table>
@@ -38,27 +40,51 @@ git clone -b humble https://github.com/JosiahSK/turtlebot3_slam_house.git
 
 ---
 
-## Prerequisites
+## Prerequisites (Humble)
 
-- **OS**: Ubuntu 24.04 LTS (or compatible Linux distribution)
-- **ROS 2**: ROS 2 Jazzy Jalisco (or Humble / Iron)
+> **Note:** These prerequisites apply to the **`humble`** branch specifically (ROS 2 Humble Hawksbill, classic Gazebo / `gazebo_ros`).
+
+- **OS**: Ubuntu 22.04 LTS
+- **ROS 2**: ROS 2 Humble Hawksbill
 - **Dependencies**:
-  - `turtlebot3` packages (`turtlebot3`, `turtlebot3_simulations`, `turtlebot3_msgs`)
+  - `turtlebot3` packages (`turtlebot3`, `turtlebot3_simulations`, `turtlebot3_msgs`) — must include `turtlebot3_gazebo`
   - `slam_toolbox`
   - `rviz2`
   - Python 3 with `tkinter` (`sudo apt install python3-tk`)
+
+Install the TurtleBot3 simulation packages via apt if available for your Ubuntu release:
+```bash
+sudo apt update
+sudo apt install ros-humble-turtlebot3-gazebo ros-humble-turtlebot3-simulations ros-humble-slam-toolbox python3-tk
+```
+
+If those packages aren't available via apt, build them from source instead (see [Installation & Setup](#installation--setup) below).
 
 ---
 
 ## Installation & Setup
 
-1. **Clone the repository** into your ROS 2 workspace `src` directory:
+1. **Clone this repository** into your ROS 2 workspace `src` directory:
    ```bash
    cd ~/slam_ws/src
-   git clone https://github.com/JosiahSK/turtlebot3_slam_house.git
+   git clone -b humble https://github.com/JosiahSK/turtlebot3_slam_house.git
    ```
 
-2. **Build the workspace**:
+2. **Clone the TurtleBot3 simulation dependencies** (only needed if the apt packages above aren't available):
+   ```bash
+   cd ~/slam_ws/src
+   git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git
+   git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+   git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+   ```
+
+3. **Install remaining dependencies with rosdep**:
+   ```bash
+   cd ~/slam_ws
+   rosdep install --from-paths src --ignore-src -r -y
+   ```
+
+4. **Build the workspace**:
    ```bash
    cd ~/slam_ws
    colcon build --symlink-install
@@ -66,14 +92,44 @@ git clone -b humble https://github.com/JosiahSK/turtlebot3_slam_house.git
 
 ---
 
-## Quick Start / Launch Instructions
+## Full Build & Launch Steps (Humble)
 
-Source your ROS 2 environment, set the TurtleBot3 model, and execute the launch file:
+> **Note:** These commands are written for **ROS 2 Humble**. If you're on Jazzy or Iron, use the `main` branch instead and adjust the `source /opt/ros/<distro>/setup.bash` lines accordingly.
 
+**1. Confirm the workspace structure**
+
+The package must sit inside a `src/` folder of a workspace:
+```text
+~/slam_ws/src/turtlebot3_slam_house/
+```
+
+**2. Install dependencies**
 ```bash
-source /opt/ros/$ROS_DISTRO/setup.bash
-source install/setup.bash
+sudo apt update
+sudo apt install python3-tk
+cd ~/slam_ws
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+**3. Build the workspace**
+```bash
+cd ~/slam_ws
+colcon build --symlink-install
+```
+
+**4. Source the environment**
+```bash
+source /opt/ros/humble/setup.bash
+source ~/slam_ws/install/setup.bash
+```
+
+**5. Set the TurtleBot3 model**
+```bash
 export TURTLEBOT3_MODEL=burger
+```
+
+**6. Launch everything**
+```bash
 ros2 launch turtlebot3_slam_house slam_house.launch.py
 ```
 
@@ -82,6 +138,13 @@ This single launch command brings up:
 2. **`slam_toolbox`** node executing asynchronous 2D mapping.
 3. **RViz2** displaying the live map generation.
 4. **Teleop GUI Controller** for driving the robot.
+
+**7. Verify the package is visible (if launch fails)**
+```bash
+ros2 pkg list | grep turtlebot3_slam_house
+```
+
+If you see a `PackageNotFoundError` for `turtlebot3_gazebo`, it means the TurtleBot3 simulation packages aren't installed — go back to [Prerequisites (Humble)](#prerequisites-humble) and install or build them.
 
 ---
 
@@ -114,7 +177,7 @@ Once you have explored the environment and built a satisfactory map in RViz:
 
 1. Open a new terminal and source the workspace:
    ```bash
-   source /opt/ros/$ROS_DISTRO/setup.bash
+   source /opt/ros/humble/setup.bash
    source ~/slam_ws/install/setup.bash
    ```
 
@@ -182,11 +245,11 @@ turtlebot3_slam_house/
 
 ## Reference Package Versions & Branches
 
-- **ROS 2 Distribution**: ROS 2 Jazzy Jalisco (Ubuntu 24.04 LTS)
-- **`turtlebot3`**: `jazzy` branch
-- **`turtlebot3_simulations`**: `jazzy` branch (`turtlebot3_gazebo` house world)
-- **`turtlebot3_msgs`**: `jazzy` branch
-- **`slam_toolbox`**: `jazzy` branch
+- **ROS 2 Distribution**: ROS 2 Humble Hawksbill (Ubuntu 22.04 LTS)
+- **`turtlebot3`**: `humble-devel` branch
+- **`turtlebot3_simulations`**: `humble-devel` branch (`turtlebot3_gazebo` house world)
+- **`turtlebot3_msgs`**: `humble-devel` branch
+- **`slam_toolbox`**: `humble` branch (or `ros-humble-slam-toolbox` via apt)
 
 ---
 
