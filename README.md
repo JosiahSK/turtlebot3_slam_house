@@ -73,6 +73,50 @@ A ROS 2 package documenting the TurtleBot3 Burger SLAM simulation setup in a Gaz
 
 ---
 
+## Full Build & Launch Steps (Humble)
+
+1. Note that the package must sit inside a `src/` folder of a workspace, e.g.:
+   ```text
+   ~/slam_ws/src/turtlebot3_slam_house/
+   ```
+
+2. Install dependencies:
+   ```bash
+   sudo apt update
+   sudo apt install python3-tk
+   cd ~/slam_ws
+   rosdep install --from-paths src --ignore-src -r -y
+   ```
+
+3. Build the workspace:
+   ```bash
+   cd ~/slam_ws
+   colcon build --symlink-install
+   ```
+
+4. Source the environment:
+   ```bash
+   source /opt/ros/humble/setup.bash
+   source ~/slam_ws/install/setup.bash
+   ```
+
+5. Set the TurtleBot3 model:
+   ```bash
+   export TURTLEBOT3_MODEL=burger
+   ```
+
+6. Launch everything:
+   ```bash
+   ros2 launch turtlebot3_slam_house slam_house.launch.py
+   ```
+
+7. If the launch fails, verify the package is visible:
+   ```bash
+   ros2 pkg list | grep turtlebot3_slam_house
+   ```
+
+---
+
 ## Quick Start / Launch Instructions
 
 Source your ROS 2 Humble environment, set the TurtleBot3 model, and execute the launch file:
